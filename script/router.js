@@ -1,12 +1,15 @@
 import {Start} from "./pages/start.js";
 import {Stats} from "./pages/stats.js";
+import {SemanticSearch} from "./pages/semantic_search.js";
 
 export class Router {
   popstate() {
-    if(window.location.hash === "") {
+    const split = window.location.hash.split("/");
+    if (window.location.hash === "") {
       Start.render();
+    } else if (split[4] !== undefined && split[4] == "semantic") {
+      SemanticSearch.render(split[2], split[3]);
     } else {
-      const split = window.location.hash.split("/");
       Stats.render(split[2], split[3]);
     }
   }
