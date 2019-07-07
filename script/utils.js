@@ -7,6 +7,15 @@ export function getUrl(file = "generated.json") {
   }
 }
 
+export function escape(str) {
+  str = str.replace(/&/g, "&amp;");
+  str = str.replace(/>/g, "&gt;");
+  str = str.replace(/</g, "&lt;");
+  str = str.replace(/"/g, "&quot;");
+  str = str.replace(/'/g, "&#039;");
+  return str;
+}
+
 export function ajax(url) {
   return new Promise((resolve, reject) => {
     let xhttp = new XMLHttpRequest();
