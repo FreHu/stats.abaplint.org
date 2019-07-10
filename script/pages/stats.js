@@ -60,25 +60,29 @@ class StatementCompatibility {
     let html = heading("Statement Compatibility");
     document.getElementById(div).innerHTML = html;
 
-    let green = "#3cba9f";
-    let red = "#c45850";
-    let points = [];
+    let green = [];
+    let red = [];
     let labels = [];
-    let colors = [];
+    let min = data.totals.statements;
 
     for (const object of data.statements) {
       labels.push(object.type);
-      points.push(object.count);
-      if (object.count === data.totals.statements) {
-        colors.push(green);
-      } else {
-        colors.push(red);
-      }
+      green.push(object.count);
+      red.push(data.totals.statements - object.count);
+      min = Math.min(min, object.count);
     }
+    min = Math.max(0, min - 500);
 
     var data = {
-      datasets: [{data: points,
-        backgroundColor: colors,
+      datasets: [{
+        data: green,
+        label: "Compatible",
+        backgroundColor: "#3cba9f",
+      },
+      {
+        data: red,
+        label: "Incompatible",
+        backgroundColor: "#c45850",
       }],
       labels: labels};
 
@@ -87,7 +91,17 @@ class StatementCompatibility {
     var myChart = new Chart(ctx, {
       type: 'horizontalBar',
       data,
-      options: {legend: {display: false}}
+      options: {
+					scales: {
+						xAxes: [{
+              ticks: {min: min},
+							stacked: true,
+						}],
+						yAxes: [{
+							stacked: true
+						}]
+					},
+        legend: {display: false}}
     });
   }
 }
