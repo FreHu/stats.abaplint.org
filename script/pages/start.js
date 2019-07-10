@@ -9,7 +9,7 @@ function success(data) {
       <br>`;
   }
 
-  document.getElementById("main").innerHTML = html;
+  document.getElementById("main").innerHTML = html + "<br><a href=\"https://github.com/abaplint/stats.abaplint.org\"><i class=\"fa fa-code\" title=\"code\"></i></a>";
 }
 
 function error(e) {

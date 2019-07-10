@@ -171,10 +171,12 @@ class LinesOverTime {
     let html = heading("Lines Over Time") + data.length + " commits";
     document.getElementById(div).innerHTML = html;
 
+    var timeFormat = 'MM/DD/YYYY HH:mm';
+
     let points = [];
     let labels = [];
     for (let i = 0; i < data.length ; i++) {
-      labels.push(data[i].commit + "\n" + data[i].date);
+      labels.push(moment(data[i].date).toDate());
       points.push(data[i].lines);
     }
 
@@ -182,17 +184,35 @@ class LinesOverTime {
       datasets: [{
         data: points,
         backgroundColor: "#ccc",
+        borderColor: "#ccc",
+        label: "Lines",
+        steppedLine: true,
+        fill: false
       }],
       labels: labels};
 
     var ctx = document.getElementById(div + "_canvas").getContext('2d');
 
     var myChart = new Chart(ctx, {
-      type: 'bar',
+      type: 'line',
       data,
       options: {
+        tooltips: {
+            mode: 'nearest',
+            intersect: false
+        },
       scales: {
-        xAxes: [{ ticks: { display: false } }] },
+        xAxes: [{
+						type: 'time',
+						time: {
+							parser: timeFormat,
+							tooltipFormat: 'll HH:mm'
+						},
+						scaleLabel: {
+							display: true,
+							labelString: 'Date'
+						}
+					}] },
         legend: {display: false}}
     });
 
@@ -203,7 +223,7 @@ export class Stats {
   static render(owner, repo) {
     let full = `${owner}/${repo}`;
 
-    document.getElementById("main").innerHTML = `<u>${full}</u><br><br>
+    document.getElementById("main").innerHTML = `<u>${full}</u> <a href="https://github.com/${full}"><i class="fab fa-github" title="github"></i></a><br><br>
     <div id="stats"></div>
     <br>
     <div id="method_length"></div>
