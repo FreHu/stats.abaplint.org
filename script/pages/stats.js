@@ -50,7 +50,12 @@ class MethodLength {
     var myChart = new Chart(ctx, {
       type: 'bar',
       data,
-      options: {legend: {display: false}}
+      options: {
+        tooltips: {
+            mode: 'nearest',
+            intersect: false
+        },
+        legend: {display: false}}
     });
   }
 }
@@ -159,14 +164,7 @@ class ObjectTypes {
 
     var data = {
       datasets: [{data: points,
-        backgroundColor: ["#f4a460","#ee7942","#cd6839", "#a0522d", "#8b4513",
-          "#f4a460","#ee7942","#cd6839", "#a0522d", "#8b4513",
-          "#f4a460","#ee7942","#cd6839", "#a0522d", "#8b4513",
-          "#f4a460","#ee7942","#cd6839", "#a0522d", "#8b4513",
-          "#f4a460","#ee7942","#cd6839", "#a0522d", "#8b4513",
-          "#f4a460","#ee7942","#cd6839", "#a0522d", "#8b4513",
-          "#f4a460","#ee7942","#cd6839", "#a0522d", "#8b4513",
-          "#f4a460","#ee7942","#cd6839", "#a0522d", "#8b4513"],
+        backgroundColor: "#ccc",
       }],
       labels: labels};
 
