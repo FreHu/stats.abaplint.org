@@ -3,6 +3,8 @@ import {getUrl, ajax} from "../utils.js";
 function success(data) {
   let html = "<u>stats.abaplint.org</u><br>";
 
+  data.sort(function(a, b) { return a.name.localeCompare(b.name); });
+
   for (const r of data) {
     html = html + `<a href="./#/-/${r.name}">${r.name} <i class="fa fa-chart-bar" title="stats"></i></a>
       <a href="./#/-/${r.name}/semantic"><i class="fa fa-search" title="semantic search"></i></a>
