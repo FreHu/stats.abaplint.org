@@ -17,8 +17,8 @@ function success(data) {
   html = html + `</table>`;
 
   document.getElementById("main").innerHTML = html +
-    "<br><a href=\"https://github.com/dotabap/dotabap-list\"><i class=\"fa fa-plus\" title=\"add project\"></i></a>"
-    "<br><a href=\"https://github.com/abaplint/stats.abaplint.org\"><i class=\"fa fa-code\" title=\"source\"></i></a>";
+    "<br><a href=\"https://github.com/dotabap/dotabap-list\"><i class=\"fa fa-plus\" title=\"add project\"></i></a>&nbsp;" +
+    "<a href=\"https://github.com/abaplint/stats.abaplint.org\"><i class=\"fa fa-code\" title=\"source\"></i></a>";
 }
 
 function error(e) {

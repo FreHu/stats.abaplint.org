@@ -11,11 +11,29 @@ function heading(text) {
 
 class Issues {
   static success(div, data, owner, repo) {
-    let html = heading("Issues") + data.length + " issues<br>";
+    let html = heading("Issues") + data.length + " issues<br><br>";
 
+    let sorted = {};
     for (const issue of data) {
-      const match = issue.file.match(owner + "\/" + repo + "\/(.*)");
-      html = html + "<a href=\"https://github.com/" + owner + "/" + repo + "/blob/master/" + match[1] + "#L" + issue.start.row + "\">" + escape(issue.description) + "</a><br>";
+      if (sorted[issue.key] === undefined) {
+        sorted[issue.key] = [];
+      }
+      sorted[issue.key].push(issue);
+    }
+
+    for (const type in sorted) {
+      html = html +
+        `<input id="toggle_${type}" type="checkbox" checked class="toggle">
+        <label for="toggle_${type}">${type} (${sorted[type].length})</label>
+        <div class="expand">
+        <section>`;
+
+      for (const issue of sorted[type]) {
+        const match = issue.file.match(owner + "\/" + repo + "\/(.*)");
+        html = html + "<a href=\"https://github.com/" + owner + "/" + repo + "/blob/master/" + match[1] + "#L" + issue.start.row + "\">" + escape(issue.description) + "</a><br>";
+      }
+
+      html = html + `</section></div>`;
     }
 
     document.getElementById(div).innerHTML = html;
@@ -108,24 +126,6 @@ class StatementCompatibility {
 					},
         legend: {display: false}}
     });
-  }
-}
-
-class IssuesAggregated {
-  static success(div, data) {
-    let html = heading("Issues Aggregated");
-
-    if (data.issues.length > 0) {
-      html = html + `<table>`;
-      for (const issue of data.issues) {
-        html = html + `<tr><td>${issue.type}:&nbsp;</td><td style="text-align:right">${issue.count}</td></tr>`;
-      }
-      html = html + `</table>`;
-    } else {
-      html = html + "0 issues";
-    }
-
-    document.getElementById(div).innerHTML = html;
   }
 }
 
@@ -276,10 +276,6 @@ export class Stats {
     ajax(getUrl(full + "/stats.json"))
       .then((d) => { MethodLength.success("method_length", d); })
       .catch((e) => {error("method_length", e); });
-
-    ajax(getUrl(full + "/stats.json"))
-      .then((d) => { IssuesAggregated.success("issues_aggregated", d); })
-      .catch((e) => {error("issues_aggregated", e); });
 
     ajax(getUrl(full + "/lines_over_time.json"))
       .then((d) => { LinesOverTime.success("lines_over_time", d); })

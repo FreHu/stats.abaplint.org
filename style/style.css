@@ -20,3 +20,45 @@ a:active {
 img {
   border:0;
 }
+
+
+
+input {
+  display: none;
+  visibility: hidden;
+}
+label {
+  display: block;
+  padding: 0.5em;
+  text-align: left;
+  border-bottom: 1px solid #CCC;
+  color: #666;
+}
+label:hover {
+  color: #000;
+}
+label::before {
+  font-family: Consolas, monaco, monospace;
+  font-weight: bold;
+  font-size: 15px;
+  content: "+";
+  vertical-align: text-top;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+.expand {
+  height: 0px;
+  overflow: hidden;
+  color: #FFF;
+}
+section {
+  padding: 0 20px;
+}
+.toggle:checked + label + .expand {
+  height: 100%;
+}
+.toggle:checked + label::before {
+  content: "-";
+}
