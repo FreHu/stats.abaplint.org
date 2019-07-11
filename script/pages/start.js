@@ -5,11 +5,16 @@ function success(data) {
 
   data.sort(function(a, b) { return a.name.localeCompare(b.name); });
 
+  html = html + `<table>`;
   for (const r of data) {
-    html = html + `<a href="./#/-/${r.name}">${r.name} <i class="fa fa-chart-bar" title="stats"></i></a>
-      <a href="./#/-/${r.name}/semantic"><i class="fa fa-search" title="semantic search"></i></a>
-      <br>`;
+    html = html + `<tr>
+      <td><a href="./#/-/${r.name}">${r.name} <i class="fa fa-chart-bar" title="stats"></i></a></td>
+      <td align="right">${r.issues} <i class="fas fa-times" title="issues"></i></td>
+      <td align="right">${r.lines} <i class="fa fa-code" title="LOC"></i></td>
+      <td><a href="./#/-/${r.name}/semantic"><i class="fa fa-search" title="semantic search"></i></a></td>
+      </tr>`;
   }
+  html = html + `</table>`;
 
   document.getElementById("main").innerHTML = html + "<br><a href=\"https://github.com/abaplint/stats.abaplint.org\"><i class=\"fa fa-code\" title=\"code\"></i></a>";
 }
