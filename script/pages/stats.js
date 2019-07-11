@@ -187,9 +187,14 @@ class LinesOverTime {
 
     let points = [];
     let labels = [];
+    let previous = undefined;
     for (let i = 0; i < data.length ; i++) {
-      labels.push(moment(data[i].date).toDate());
-      points.push(data[i].lines);
+      if (previous !== data[i].lines) {
+        labels.push(moment(data[i].date).toDate());
+        points.push(data[i].lines);
+      }
+
+      previous = data[i].lines;
     }
 
     var data = {
