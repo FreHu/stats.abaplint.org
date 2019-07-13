@@ -7,6 +7,10 @@ export function getUrl(file = "generated.json") {
   }
 }
 
+export function linkFile(full, filename, row) {
+  return `<a href="https://github.com/${full}/blob/master${filename}#L${row}">${filename}, ${row}</a>`
+}
+
 export function escape(str) {
   str = str.replace(/&/g, "&amp;");
   str = str.replace(/>/g, "&gt;");

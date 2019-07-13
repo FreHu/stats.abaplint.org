@@ -29,6 +29,7 @@ class Issues {
         <section>`;
 
       for (const issue of sorted[type]) {
+// todo, replace this part
         const match = issue.file.match(owner + "\/" + repo + "\/(.*)");
         match[1] = match[1].replace(/#/g, "%23");
         html = html + "<a href=\"https://github.com/" + owner + "/" + repo + "/blob/master/" + match[1] + "#L" + issue.start.row + "\">" + escape(issue.description) + "</a><br>";

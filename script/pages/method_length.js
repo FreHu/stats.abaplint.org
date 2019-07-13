@@ -1,4 +1,4 @@
-import {getUrl, ajax} from "../utils.js";
+import {getUrl, ajax, linkFile} from "../utils.js";
 
 function error(div, e) {
   document.getElementById(div).innerHTML = 'Error loading, try again later';
@@ -11,7 +11,7 @@ export class MethodLength {
     for (const a of data) {
       if (a.length === Number(length)) {
         html = html + `<tt>METHOD ${a.name}</tt><br>
-          <a href="https://github.com/${full}/blob/master${a.filename}#L${a.row}">${a.filename}, ${a.row}</a>
+          ${linkFile(full, a.filename, a.row)}
           <br><br>`;
       }
     }

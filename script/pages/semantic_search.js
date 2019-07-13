@@ -1,6 +1,7 @@
-import {getUrl, ajax} from "../utils.js";
+import {getUrl, ajax, linkFile} from "../utils.js";
 
 let result = undefined;
+let full = undefined;
 
 function error(div, e) {
   document.getElementById(div).innerHTML = 'Error loading, try again later';
@@ -35,7 +36,7 @@ function changeDropdown(evt) {
 
   for (const found of result.expressions[Number(evt.target.value)].found) {
     html = html + "<tt><b>" + escape(found.code) + "</b></tt><br>\n" +
-      "<tt>" + result.files[found.file] + "</tt><br><tt>" + found.row + "</tt><br><br>\n";
+      linkFile(full, result.files[found.file], found.row) + "<br><br>\n";
   }
   document.getElementById("results").innerHTML = html;
 }
@@ -47,7 +48,7 @@ export class SemanticSearch {
   }
 
   static render(owner, repo) {
-    let full = `${owner}/${repo}`;
+    full = `${owner}/${repo}`;
 
     document.getElementById("main").innerHTML = `<u>${full}</u><br><br>
       <div id="status"></div>
