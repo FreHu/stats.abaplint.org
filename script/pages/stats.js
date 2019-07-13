@@ -42,20 +42,39 @@ class Issues {
 }
 
 class MethodLength {
+
+  static click(evt, array) {
+    if (array.length >= 1) {
+      window.location.hash = window.location.hash + "/method_length/" + array[0]._index;
+    }
+  }
+
   static success(div, data) {
     let html = heading("Method Length");
     document.getElementById(div).innerHTML = html;
 
-    let points = [];
-    let labels = [];
-
-    if (data.methodLength === undefined) {
-      return;
+    let lengths = {};
+    let max = 0;
+    for (const a of data) {
+      if (lengths[a.length] == undefined) {
+        lengths[a.length] = 1;
+      } else {
+        lengths[a.length] = lengths[a.length] + 1;
+      }
+      if (a.length > max) {
+        max = a.length;
+      }
     }
 
-    for (let i = 0; i < data.methodLength.length ; i++) {
+    let points = [];
+    let labels = [];
+    for (let i = 0; i <= max; i++) {
       labels.push(i);
-      points.push(data.methodLength[i]);
+      if (lengths[i]) {
+        points.push(lengths[i]);
+      } else {
+        points.push(0);
+      }
     }
 
     var data = {
@@ -66,15 +85,35 @@ class MethodLength {
 
     var ctx = document.getElementById(div + "_canvas").getContext('2d');
 
-    var myChart = new Chart(ctx, {
+    let myChart = new Chart(ctx, {
       type: 'bar',
       data,
       options: {
-        tooltips: {
-            mode: 'nearest',
-            intersect: false
+        animation: false,
+        onClick: this.click,
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         },
-        legend: {display: false}}
+        tooltips: {
+          mode: 'nearest',
+          callbacks: {
+            title: function(tooltipItem, obj) {
+              return tooltipItem[0].xLabel + " statements";
+            },
+            label: function(tooltipItem) {
+              return Number(tooltipItem.yLabel) + " method(s)";
+            }
+          },
+          intersect: false
+        },
+        legend: {
+          display: false
+        }
+      }
     });
   }
 }
@@ -116,6 +155,7 @@ class StatementCompatibility {
       type: 'horizontalBar',
       data,
       options: {
+        animation: false,
 					scales: {
 						xAxes: [{
               ticks: {min: min},
@@ -174,7 +214,9 @@ class ObjectTypes {
     var myChart = new Chart(ctx, {
       type: 'pie',
       data,
-      options: {legend: {position: "right"}}
+      options: {
+        animation: false,
+        legend: {position: "right"}}
     });
   }
 }
@@ -215,11 +257,12 @@ class LinesOverTime {
       type: 'line',
       data,
       options: {
+        animation: false,
         tooltips: {
             mode: 'nearest',
             intersect: false
         },
-      scales: {
+        scales: {
         xAxes: [{
 						type: 'time',
 						time: {
@@ -274,7 +317,7 @@ export class Stats {
       .then((d) => { StatementCompatibility.success("statement_compatibility", d); })
       .catch((e) => {error("statement_compatibility", e); });
 
-    ajax(getUrl(full + "/stats.json"))
+    ajax(getUrl(full + "/method_length.json"))
       .then((d) => { MethodLength.success("method_length", d); })
       .catch((e) => {error("method_length", e); });
 
