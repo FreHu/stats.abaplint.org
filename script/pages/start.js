@@ -12,6 +12,7 @@ function success(data) {
       <td align="right">${r.issues} <i class="fas fa-times" title="issues"></i></td>
       <td align="right">${r.lines} <i class="fa fa-code" title="LOC"></i></td>
       <td><a href="./#/-/${r.name}/semantic"><i class="fa fa-search" title="semantic search"></i></a></td>
+      <td align="right">${r.head}</i></td>
       </tr>`;
   }
   html = html + `</table>`;
