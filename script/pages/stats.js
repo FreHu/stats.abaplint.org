@@ -29,7 +29,7 @@ class Issues {
         <section>`;
 
       for (const issue of sorted[type]) {
-        html = html + linkFile(owner + "/" + repo, issue.file, issue.start.row) + "<br>";
+        html = html + linkFile(owner + "/" + repo, issue.file, issue.start.row, issue.description + ", ") + "<br>";
       }
 
       html = html + `</section></div>`;

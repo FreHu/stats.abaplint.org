@@ -7,8 +7,8 @@ export function getUrl(file = "generated.json") {
   }
 }
 
-export function linkFile(full, filename, row) {
-  return `<a href="https://github.com/${full}/blob/master${filename}#L${row}">${filename}, ${row}</a>`
+export function linkFile(full, filename, row, more = "") {
+  return `<a href="https://github.com/${full}/blob/master${filename}#L${row}">${more}${filename}, ${row}</a>`
 }
 
 export function escape(str) {
