@@ -8,6 +8,7 @@ export function getUrl(file = "generated.json") {
 }
 
 export function linkFile(full, filename, row, more = "") {
+  filename = filename.replace(/#/g, "%23");
   return `<a href="https://github.com/${full}/blob/master${filename}#L${row}">${more}${filename}, ${row}</a>`
 }
 
