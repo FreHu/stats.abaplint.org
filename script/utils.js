@@ -7,11 +7,6 @@ export function getUrl(file = "generated.json") {
   }
 }
 
-export function linkFile(full, filename, row, more = "") {
-  filename = filename.replace(/#/g, "%23");
-  return `<a href="https://github.com/${full}/blob/master${filename}#L${row}">${more}${filename}, ${row}</a>`
-}
-
 export function escape(str) {
   str = str.replace(/&/g, "&amp;");
   str = str.replace(/>/g, "&gt;");
@@ -19,6 +14,11 @@ export function escape(str) {
   str = str.replace(/"/g, "&quot;");
   str = str.replace(/'/g, "&#039;");
   return str;
+}
+
+export function linkFile(full, filename, row, more = "") {
+  filename = filename.replace(/#/g, "%23");
+  return `<a href="https://github.com/${full}/blob/master${filename}#L${row}">${escape(more)}${filename}, ${row}</a>`
 }
 
 export function ajax(url) {

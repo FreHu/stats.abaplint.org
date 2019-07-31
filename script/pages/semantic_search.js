@@ -1,4 +1,4 @@
-import {getUrl, ajax, linkFile} from "../utils.js";
+import {getUrl, ajax, linkFile, escape} from "../utils.js";
 
 let result = undefined;
 let full = undefined;
@@ -20,15 +20,6 @@ function popuplateDropdown() {
 
 function linkToExpression(name) {
   return "<a href=\"https://syntax.abaplint.org/#/expression/" + name + "\" target=\"_blank\">" + name + "</a>";
-}
-
-function escape(str) {
-  str = str.replace(/&/g, "&amp;");
-  str = str.replace(/>/g, "&gt;");
-  str = str.replace(/</g, "&lt;");
-  str = str.replace(/"/g, "&quot;");
-  str = str.replace(/'/g, "&#039;");
-  return str;
 }
 
 function changeDropdown(evt) {
